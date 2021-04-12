@@ -1,30 +1,35 @@
 import gql from 'graphql-tag'
 import { ApolloServer } from 'apollo-server'
+import type { IPersonEntity } from './types/PersonEntity'
+
+// axios
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: 'https://swapi.dev/api/',
+})
 
 const typeDefs = gql`
-  type User {
-    email: String!
-    avatar: String
-    friends: [User]
+  type Person {
+    name: String!
+    gender: String
+    eyeColor: String
   }
 
   type Query {
-    me: User!
+    people: Person!
   }
 `
 const resolvers = {
   Query: {
-    me() {
-      return {
-        email: 'foo@foo.com',
-        avatar: 'foo',
-        friends: [
-          {
-            email: 'bar@bar.com',
-            avatar: 'bar',
-          },
-        ],
-      }
+    async people() {
+      return api.get('people/1').then(({ data }: { data: IPersonEntity }) => {
+        return {
+          name: data.name,
+          gender: data.gender,
+          eyeColor: data.eye_color,
+        }
+      })
     },
   },
 }

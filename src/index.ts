@@ -54,6 +54,13 @@ const resolvers = {
           }
         })
     },
+    // over rides
+    Person: {
+      name(people: IPersonEntity) {
+        console.log(people)
+        return 'FocusThen'
+      },
+    },
     /**
      *
      * @param _ - Inital values

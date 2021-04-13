@@ -17,19 +17,28 @@ const typeDefs = gql`
   }
 
   type Query {
-    people: Person!
+    people(id: Int!): Person!
   }
 `
 const resolvers = {
   Query: {
-    async people() {
-      return api.get('people/1').then(({ data }: { data: IPersonEntity }) => {
-        return {
-          name: data.name,
-          gender: data.gender,
-          eyeColor: data.eye_color,
-        }
-      })
+    /**
+     *
+     * @param _ - Inital values
+     * @param args
+     * @param __ - Context
+     * @returns
+     */
+    async people(_: null, { id }: { id: number }, __: any) {
+      return api
+        .get(`people/${id}`)
+        .then(({ data }: { data: IPersonEntity }) => {
+          return {
+            name: data.name,
+            gender: data.gender,
+            eyeColor: data.eye_color,
+          }
+        })
     },
   },
 }
@@ -37,6 +46,9 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context() {
+    return {}
+  },
 })
 
 server.listen(4000).then(() => console.log('server running'))

@@ -1,6 +1,8 @@
 import gql from 'graphql-tag'
 import { ApolloServer } from 'apollo-server'
 import type { IPersonEntity } from './types/PersonEntity'
+import type { IFilmsEntity } from './types/FilmsEntity'
+import type { IStarshipEntity } from './types/StarshipsEntity'
 
 // axios
 import axios from 'axios'
@@ -16,8 +18,21 @@ const typeDefs = gql`
     eyeColor: String
   }
 
+  type Films {
+    title: String!
+    director: String!
+    producer: String!
+  }
+
+  type Starships {
+    name: String!
+    model: String!
+  }
+
   type Query {
     people(id: Int!): Person!
+    films(id: Int!): Films!
+    starships(id: Int!): Starships!
   }
 `
 const resolvers = {
@@ -25,9 +40,8 @@ const resolvers = {
     /**
      *
      * @param _ - Inital values
-     * @param args
+     * @param id - number
      * @param __ - Context
-     * @returns
      */
     async people(_: null, { id }: { id: number }, __: any) {
       return api
@@ -37,6 +51,37 @@ const resolvers = {
             name: data.name,
             gender: data.gender,
             eyeColor: data.eye_color,
+          }
+        })
+    },
+    /**
+     *
+     * @param _ - Inital values
+     * @param id - number
+     * @param __ - Context
+     */
+    async films(_: null, { id }: { id: number }, __: any) {
+      return api.get(`films/${id}`).then(({ data }: { data: IFilmsEntity }) => {
+        return {
+          title: data.title,
+          director: data.director,
+          producer: data.producer,
+        }
+      })
+    },
+    /**
+     *
+     * @param _ - Inital values
+     * @param id - number
+     * @param __ - Context
+     */
+    async starships(_: null, { id }: { id: number }, __: any) {
+      return api
+        .get(`starships/${id}`)
+        .then(({ data }: { data: IStarshipEntity }) => {
+          return {
+            name: data.name,
+            model: data.model,
           }
         })
     },

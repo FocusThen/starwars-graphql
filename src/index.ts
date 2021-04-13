@@ -57,6 +57,7 @@ const resolvers = {
     // over rides
     Person: {
       name(people: IPersonEntity) {
+        // first name + last name
         console.log(people)
         return 'FocusThen'
       },

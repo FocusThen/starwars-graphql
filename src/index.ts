@@ -47,7 +47,11 @@ const resolvers = {
      * @param id - number
      * @param __ - Context
      */
-    async people(_: null, { id }: { id: number }, __: any) {
+    async people(
+      _: null,
+      { input: { id } }: { input: { id: number } },
+      __: any
+    ) {
       return api
         .get(`people/${id}`)
         .then(({ data }: { data: IPersonEntity }) => {
@@ -72,7 +76,11 @@ const resolvers = {
      * @param id - number
      * @param __ - Context
      */
-    async films(_: null, { id }: { id: number }, __: any) {
+    async films(
+      _: null,
+      { input: { id } }: { input: { id: number } },
+      __: any
+    ) {
       return api.get(`films/${id}`).then(({ data }: { data: IFilmsEntity }) => {
         return {
           title: data.title,
@@ -87,7 +95,11 @@ const resolvers = {
      * @param id - number
      * @param __ - Context
      */
-    async starships(_: null, { id }: { id: number }, __: any) {
+    async starships(
+      _: null,
+      { input: { id } }: { input: { id: number } },
+      __: any
+    ) {
       return api
         .get(`starships/${id}`)
         .then(({ data }: { data: IStarshipEntity }) => {

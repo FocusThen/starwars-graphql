@@ -7,3 +7,5 @@
 - Schema + Resolvers => Server
 
 - Each individual fields does have its own default resolver
+
+- GraphQL for VSCode Extension.

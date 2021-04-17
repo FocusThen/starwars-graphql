@@ -29,10 +29,14 @@ const typeDefs = gql`
     model: String!
   }
 
+  input IdInput {
+    id: Int!
+  }
+
   type Query {
-    people(id: Int!): Person!
-    films(id: Int!): Films!
-    starships(id: Int!): Starships!
+    people(input: IdInput!): Person!
+    films(input: IdInput!): Films!
+    starships(input: IdInput!): Starships!
   }
 `
 const resolvers = {

@@ -51,3 +51,9 @@ Query {
 }
 
 ```
+
+### Unions
+
+```diff
+  union Footware =  Sneaker | Boot
+```
